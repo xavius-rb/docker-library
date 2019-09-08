@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:11.5-alpine
+    environment:
+      POSTGRES_USER: yourDBuser
+      POSTGRES_PASSWORD: yourDBpassWord
+      POSTGRES_DB:
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:5.0-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/var/lib/redis/data
+
+  # your app image
+  app: &app_base
+    build: .
+    environment:
+      BUNDLE_GEMFILE:
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .app.env
+
+  worker:
+    <<: *app_base
+    command: bundle exec sidekiq
+    ports: []
+
+volumes:
+  postgres:
+  redis:

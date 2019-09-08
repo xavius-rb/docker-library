@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'thor'
+
+class AppCreator < Thor
+  desc 'new [APP_NAME]', 'Creates a new rails app with Xavius template'
+  def new(app_name)
+    install_rails
+    system("rails new #{app_name} -m /opt/rails/template.rb -d postgresql -T")
+  end
+
+  private
+    def install_rails
+      command = <<-SHELL
+      if ! [ -x "$(command -v rails)" ]; then
+        echo 'Error: rails is not installed. Installing latest rails...';
+        gem install rails;
+      fi
+      SHELL
+
+      system(command)
+    end
+end
+
+AppCreator.start(ARGV)

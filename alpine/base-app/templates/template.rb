@@ -5,13 +5,12 @@ end
 def add_gems
   say '--- Adding new gems...'
 
-  gem_group :xavius do
-    gem 'redis'
-    gem 'draper'
-    gem 'sidekiq'
-    gem 'devise'
-    gem 'pundit'
-  end
+  gem 'xavius'
+  gem 'redis'
+  gem 'draper'
+  gem 'sidekiq'
+  gem 'devise'
+  gem 'pundit'
 
   gem_group :development, :test do
     gem 'rspec-rails'
@@ -83,7 +82,7 @@ dockerize
 after_bundle do
   setup_draper
   create_home_index
-  setup_redis_cache
+  setup_redis_cache if yes?("--- Setup Redis cache store?")
   setup_sidekiq if yes?("--- Setup Sidekiq?")
   setup_devise if yes?("--- Setup Devise?")
   setup_pundit if yes?("--- Setup Pundit?")

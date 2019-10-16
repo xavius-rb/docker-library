@@ -18,4 +18,7 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /home
 
+ARG BUNDLE_GEMFILE=Gemfile
+ENV BUNDLE_GEMFILE=${BUNDLE_GEMFILE}
+
 CMD ["/bin/sh"]

@@ -1,22 +1,18 @@
-FROM ruby:2.6-alpine
+FROM ruby:alpine
 RUN apk add --no-cache --quiet \
     build-base \
+    curl \
+    git \
     postgresql-dev \
     sqlite-dev \
     tzdata \
     nodejs \
     yarn
 
-RUN gem install thor
-COPY bin/xavius /usr/local/bin
-RUN chmod +x /usr/local/bin/xavius
-
-RUN mkdir /opt/rails
-COPY templates/* /opt/rails/
-
 RUN mkdir -p /usr/src/app
+ENV APP_ROOT=/usr/src/app
 
-WORKDIR /home
+WORKDIR /usr/src/app
 
 ARG BUNDLE_GEMFILE=Gemfile
 ENV BUNDLE_GEMFILE=${BUNDLE_GEMFILE}

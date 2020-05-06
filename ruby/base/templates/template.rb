@@ -62,6 +62,10 @@ def setup_redis_cache
   environment "config.cache_store = :redis_cache_store, { url: ENV['CACHE_URL'] }"
 end
 
+def setup_rspec
+  generate "rspec:install"
+end
+
 def dockerize
   say "--- Dockerizing..."
   copy_file "Dockerfile"
@@ -80,6 +84,7 @@ add_gems
 dockerize
 
 after_bundle do
+  setup_rspec
   setup_draper
   create_home_index
   setup_redis_cache if yes?("--- Setup Redis cache store?")

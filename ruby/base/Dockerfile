@@ -6,13 +6,16 @@ RUN apk add --no-cache --quiet \
     postgresql-dev \
     sqlite-dev \
     tzdata \
-    nodejs \
+    nodejs-npm \
     yarn
 
 RUN mkdir -p /usr/src/app
 ENV APP_ROOT=/usr/src/app
 
-WORKDIR /usr/src/app
+WORKDIR $APP_ROOT
+
+RUN mkdir /opt/xavius
+COPY templates/* /opt/xavius/
 
 ARG BUNDLE_GEMFILE=Gemfile
 ENV BUNDLE_GEMFILE=${BUNDLE_GEMFILE}

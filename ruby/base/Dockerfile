@@ -1,4 +1,4 @@
-FROM ruby:alpine
+FROM ruby:2.7-alpine
 RUN apk add --no-cache --quiet \
     build-base \
     curl \

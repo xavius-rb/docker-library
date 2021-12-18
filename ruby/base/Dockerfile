@@ -4,6 +4,7 @@ RUN apk add --no-cache \
     build-base \
     git \
     postgresql-dev \
+    sqlite-dev \
     tzdata \
     npm
 
